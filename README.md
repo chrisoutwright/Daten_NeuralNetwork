@@ -21,7 +21,7 @@ The Main file is in neuralNet package
      - `nn.allCompute()`: Run Forward Propagation via recursive "Neuron" method `compute()` for neurons in output layer  
      - `nn.setLosses()` : 
         - `this.lsfct = new LossFunction(NeuronLayer nl, Datenpunkt)`: instance will have first backpropagation errors for output neurons in a HashMap
-        - The recursive `backCompute(LossFunction ls)` `Neuron" method: starts with instances of `InputNeuron` and will backpropagate the error component, saving it in a double for the relevant Neurons
+        - The recursive `backCompute(LossFunction ls)` "Neuron" method: starts with instances of `InputNeuron` and will backpropagate the error component, saving it in a double for the relevant Neurons
      - `nn.updateAllLayersWeights()`: this will use the Neuron instance variable `error` to update the weights in its `HashMap<Neuron, Double> neurolist` of Neurons (as keys) acting as Input to the node
      - `nn.nextPoint()`: iterator for the Dataset of instance `Datensatz` (set within the nn instance) will point to the next element `Datenpunkt` as datapoint to continue the process in the next loop
         
