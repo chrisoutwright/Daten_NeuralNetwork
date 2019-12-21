@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Random;
 
 import neuralElements.ActFunktion;
+import neuralElements.BiasNeuron;
 import neuralElements.Neuron;
 
 public class NeuralLayer {
@@ -13,6 +14,7 @@ public class NeuralLayer {
 
 	protected ArrayList<Neuron> layerNeurons = new ArrayList<Neuron>();
 
+	protected ActFunktion fct;
 
 	protected NeuralLayer(String name) {
 		this.name = name;
@@ -22,34 +24,34 @@ public class NeuralLayer {
 
 		this(name);
 
-		ActFunktion fct = new ActFunktion();
+		this.fct = new ActFunktion();
 
 		for (int i = 0; i < anzahl; i++) {
 
 			layerNeurons.add(new Neuron(fct));
 
 		}
+		layerNeurons.add(new BiasNeuron(this.fct));
+
 	}
 
 	public void connectLayers(ArrayList<Neuron> otherlayerNeurons) {
 
 		Random rnd = new Random();
-		
-		
 
 		for (Neuron current : this.layerNeurons) {
-			
-			
+
+			if (current instanceof BiasNeuron) {
+				continue;
+
+			}
 
 			for (Neuron othercurrent : otherlayerNeurons) {
-				
-				
 
-				//current.addInput(othercurrent, (2*(rnd.nextDouble())-1));
+				current.addInput(othercurrent, (2 * (rnd.nextDouble()) - 1));
 				othercurrent.addReceiverNeuron(current, 0.0);
-				current.addInput(othercurrent, (1.0/this.layerNeurons.size()));
+				// current.addInput(othercurrent, (1.0 / this.layerNeurons.size()));
 			}
-			
 
 		}
 
@@ -73,7 +75,7 @@ public class NeuralLayer {
 			current.reset();
 		}
 	}
-	
+
 	public void UpdateLayerWeights() {
 		for (Neuron current : this.layerNeurons) {
 			current.updateAllInputWeights();

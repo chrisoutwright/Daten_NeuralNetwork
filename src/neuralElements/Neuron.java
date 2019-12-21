@@ -25,7 +25,7 @@ public class Neuron {
 
 		this.fctn = fctn;
 		this.nodeId = this.toString();
-		int recur = 0;
+
 	}
 
 	public void addInput(Neuron neuron, double weight) {
@@ -65,19 +65,6 @@ public class Neuron {
 		this.output = this.fctn.applyFunction(result);
 		return this.output;
 	}
-
-	/*
-	 * public double backCompute(double bla) {
-	 * 
-	 * // double delta = this.fctn.functionDerivative(bla);
-	 * 
-	 * // forall n in neighbours: changeWeight(this, n : reduce by delta)
-	 * 
-	 * // forall n in neightbours: backcompute(delta)
-	 * 
-	 * return this.output; }
-	 * 
-	 */
 
 	public String toString() {
 
@@ -142,6 +129,14 @@ public class Neuron {
 
 		for (Neuron in : neuronlist.keySet()) {
 
+			if (in instanceof BiasNeuron) {
+
+				zahl = this.neuronlist.get(in) - 0.5 * (this.error * in.getOutput());
+				this.neuronlist.put(in, zahl);
+
+				continue;
+			}
+
 			zahl = this.neuronlist.get(in) - 0.5 * (this.error * in.getOutput());
 
 			this.neuronlist.put(in, zahl);
@@ -159,7 +154,7 @@ public class Neuron {
 		double result = 0.0;
 		// recur++;
 		for (Neuron post : this.propagateErrors.keySet()) {
-			result +=  (post.backCompute(ls))*fctn.functionDerivative(this.output)*(post.getInputs().get(this));
+			result += (post.backCompute(ls)) * fctn.functionDerivative(this.output) * (post.getInputs().get(this));
 
 		}
 

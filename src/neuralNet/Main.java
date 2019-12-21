@@ -14,24 +14,24 @@ public class Main {
 		Datensatz training2 = new Datensatz("training2");
 		Random rnd = new Random();
 
-		for (int i = 0; i < 1000; i++) {
+		for (int i = 0; i < 6000; i++) {
 
-			double x = Math.pow(rnd.nextDouble()*2,0.33)-1;
+			double x = Math.pow(rnd.nextDouble() * 2, 0.33) - 1;
 			double y = (rnd.nextDouble() * 2 - 1);
 
-			boolean tester = (y >= x*x*x);
+			boolean tester = (y >= x * x * x);
 
 			training2.addDatenpunkt(new Datenpunkt(x, y, tester));
 
 		}
 
-		int[] nodesInHiddenLayer = { 3,5 };
+		int[] nodesInHiddenLayer = { 4,5,3 };
 
 		NeuralNet nn = new NeuralNet(nodesInHiddenLayer.length, nodesInHiddenLayer, training2);
 		nn.printAllLayerNodes();
 		int count = 0;
 		int count2 = 0;
-		int zahl = 30000;
+		int zahl = 100;
 
 		// System.out.println(nn.getNLayer(1).getLayerNeuronArray().get(3).getReceivers().size());
 
@@ -81,6 +81,22 @@ public class Main {
 				}
 
 				nn.updateAllLayersWeights();
+				
+				for(Neuron in : nn.getNLayer(1).getLayerNeuronArray().get(0).getInputs().keySet()) {
+				
+					
+				/*	if(in instanceof BiasNeuron) {
+					System.out.println("Weight Bias in H1 to H2 N1: ");
+					System.out.println(nn.getNLayer(1).getLayerNeuronArray().get(0).getInputs().get(in));
+					System.out.println(nn.getNLayer(1).getLayerNeuronArray().get(1).getInputs().get(in));
+					
+					
+					
+					
+				
+				}*/
+					
+				}
 
 				count2 = i;
 				nn.nextPoint();
@@ -96,12 +112,12 @@ public class Main {
 
 			// training2.removeAllPoints();
 
-			for (int i = 0; i < 1000; i++) {
+			for (int i = 0; i < 10000; i++) {
 
-				double x = Math.pow(rnd.nextDouble()*2,0.33)-1;
+				double x = Math.pow(rnd.nextDouble() * 2, 0.33) - 1;
 				double y = (rnd.nextDouble() * 2 - 1);
 
-				boolean tester = (y >= x*x*x);
+				boolean tester = (y >= x * x * x);
 
 				training2.addDatenpunkt(new Datenpunkt(x, y, tester));
 

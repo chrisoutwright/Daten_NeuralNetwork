@@ -2,6 +2,7 @@ package neuralNet;
 
 import Daten.Datenpunkt;
 import neuralElements.ActFunktion;
+import neuralElements.BiasNeuron;
 import neuralElements.InputNeuron;
 
 public class InitialNeuralLayer extends NeuralLayer {
@@ -10,13 +11,14 @@ public class InitialNeuralLayer extends NeuralLayer {
 
 		super(name);
 
-		ActFunktion fct = new ActFunktion();
+		this.fct = new ActFunktion();
 
 		for (int i = 0; i < anzahl; i++) {
 
 			layerNeurons.add(new InputNeuron(fct));
 
 		}
+		layerNeurons.add(new BiasNeuron(this.fct));
 	}
 
 	public InitialNeuralLayer(String name) {
